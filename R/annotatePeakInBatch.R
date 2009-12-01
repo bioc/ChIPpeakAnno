@@ -1,18 +1,20 @@
 annotatePeakInBatch <-
-function(myPeakList, mart,featureType="TSS", AnnotationData)
+function(myPeakList, mart,featureType=c("TSS","miRNA", "Exon"), AnnotationData)
 {
+		 featureType = match.arg(featureType)
 		 if (class(myPeakList) != "RangedData")
 		 {
 			stop("myPeakList needs to be RangedData object")
 		 }		
 		if (missing(AnnotationData))
 		{
-			message("No AnnotationData as RangedData is passed in, so now querying biomart database for AnnotationData!")
-			TSS.ordered<- getAnnotation(mart, feature=featureType)
+			message("No AnnotationData as RangedData is passed in, so now querying biomart database for AnnotationData ....")
+			AnnotationData<- getAnnotation(mart, feature=featureType)
+			message("Done querying biomart database, start annotating ....Better way would be calling getAnnotation before calling annotatePeakInBatch")
 		}
 		if (class(AnnotationData) != "RangedData")
 		{
-			stop("AnnotationData needs to be RangdeData object")
+			stop("AnnotationData needs to be RangedData object")
 		}
 		
 		TSS.ordered <-AnnotationData
