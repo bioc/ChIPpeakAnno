@@ -1,14 +1,22 @@
 annotatePeakInBatch <-
 function(myPeakList, mart,featureType=c("TSS","miRNA", "Exon"), AnnotationData)
 {
-		 featureType = match.arg(featureType)
-		 if (class(myPeakList) != "RangedData")
-		 {
-			stop("myPeakList needs to be RangedData object")
-		 }		
+		featureType = match.arg(featureType)
+		if (missing(myPeakList))
+		{
+			stop("Missing required argument myPeakList!")
+		}
+		if (class(myPeakList) != "RangedData")
+		{
+			stop("No valid myPeakList passed in. It needs to be RangedData object")
+		}
 		if (missing(AnnotationData))
 		{
 			message("No AnnotationData as RangedData is passed in, so now querying biomart database for AnnotationData ....")
+			if (missing(mart) || class(mart) !="Mart")
+			{
+				stop("Error in querying biomart database. No valid mart object is passed in! Suggest call getAnnotation before calling annotatePeakInBatch")
+			}
 			AnnotationData<- getAnnotation(mart, feature=featureType)
 			message("Done querying biomart database, start annotating ....Better way would be calling getAnnotation before calling annotatePeakInBatch")
 		}

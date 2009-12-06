@@ -51,6 +51,13 @@ if (interactive())
 	annotatedPeak1= annotatePeakInBatch(myexp, AnnotationData = literature)
 
 	as.data.frame(annotatedPeak1)
+	### use BED2RangedData or GFF2RangedData to convert BED format or GFF format to RangedData before calling annotatePeakInBatch
+	test.bed = data.frame(cbind(chrom = c("1", "2"), chromStart=c("100", "1000"),chromEnd=c("200", "1100"), name=c("peak1", "peak2")))
+	test.rangedData = BED2RangedData(test.bed)
+	annotatePeakInBatch(test.rangedData, AnnotationData = literature)
+	test.GFF = data.frame(cbind(seqname  = c("chr1", "chr2"), source=rep("Macs", 2), feature=rep("peak", 2), start=c("100", "1000"), end=c("200", "1100"), score=c(60, 26), strand=c(1, -1), frame=c(".", 2), group=c("peak1", "peak2")))
+	test.rangedData = GFF2RangedData(test.GFF)
+	as.data.frame(annotatePeakInBatch(test.rangedData, AnnotationData = literature))
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

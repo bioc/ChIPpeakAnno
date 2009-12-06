@@ -2,6 +2,10 @@ getAnnotation <-
 function(mart, featureType=c("TSS","miRNA", "Exon"))
 {
 		featureType = match.arg(featureType)
+		if (missing(mart) || class(mart) !="Mart")
+		{
+			stop("No valid mart object is passed in!")
+		}
 		if (featureType == "TSS")
 		{
 			TSS = getBM(c("ensembl_gene_id","chromosome_name", "start_position", "end_position", "strand", "description"), mart = mart)
