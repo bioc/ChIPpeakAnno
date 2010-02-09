@@ -24,7 +24,7 @@ annotatePeakInBatch(myPeakList, mart, featureType = c("TSS", "miRNA","Exon"), An
     \item{\code{distancetoFeature}}{distance to the nearest feature such as transcription start site. The distance is calculated as the distance between the start of the binding site and the TSS that is the gene start for genes located on the forward strand and the gene end for genes located on the reverse strand}
     \item{\code{start_position}}{start position of the feature such as gene}
     \item{\code{end_position}}{end position of the feature such as the gene}
-    \item{\code{strand}}{1 for positive strand and -1 for negative strand where the feature is located}
+    \item{\code{strand}}{1 or + for positive strand and -1 or - for negative strand where the feature is located}
 }
 \references{ Durinck S. et al. (2005) BioMart and Bioconductor: a powerful link between biological biomarts and microarray data analysis. Bioinformatics, 21, 3439-3440.  }
 \author{ Lihua Julie Zhu }
