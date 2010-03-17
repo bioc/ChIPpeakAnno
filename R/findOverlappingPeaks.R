@@ -26,8 +26,9 @@ function(Peaks1,Peaks2,maxgap=100,multiple=c(TRUE, FALSE), NameOfPeaks1="TF1", N
 			rownames(Peaks2) = formatC(1:dim(Peaks2)[1], width=nchar(dim(Peaks2)[1]), flag='0')
 		}
 
-		r2 = cbind(rownames(Peaks2), start(Peaks2), end(Peaks2))
-		colnames(r2) = c(NameOfPeaks2, paste(NameOfPeaks2, "start", sep="_"), paste(NameOfPeaks2,"end", sep="_"))
+		r2 = cbind(rownames(Peaks2), start(Peaks2), end(Peaks2),Peaks2$strand)
+		colnames(r2) = c(NameOfPeaks2, paste(NameOfPeaks2, "start", sep="_"), paste(NameOfPeaks2,"end", sep="_"), "strand")
+		
 		allChr.Anno = unique(space(Peaks2))
 			
 		numberOfChromosome = length(unique(space(Peaks1)))
@@ -40,7 +41,8 @@ function(Peaks1,Peaks2,maxgap=100,multiple=c(TRUE, FALSE), NameOfPeaks1="TF1", N
 			Peaks1 = RangedData(IRanges(start=start(Peaks1), 
 							end= end(Peaks1),
 							names = rownames(Peaks1)),
-							space = sub("chr", "", space(Peaks1))
+							space = sub("chr", "", space(Peaks1)),
+							strand = Peaks1$strand
 							)
 		}
 		
@@ -50,12 +52,14 @@ function(Peaks1,Peaks2,maxgap=100,multiple=c(TRUE, FALSE), NameOfPeaks1="TF1", N
 			Peaks1 = RangedData(IRanges(start=start(Peaks1), 
 							end= end(Peaks1),
 							names = rownames(Peaks1)),
-							space = paste("chr", space(Peaks1), sep="")
+							space = paste("chr", space(Peaks1), sep=""),
+							strand = Peaks1$strand
 							)
 		}
 		
-		z1 = cbind(as.character(rownames(Peaks1)), as.character(space(Peaks1)),start(Peaks1), end(Peaks1))
-		colnames(z1) = c(NameOfPeaks1, "chr", paste(NameOfPeaks1, "start", sep="_"), paste(NameOfPeaks1,"end", sep="_"))
+		z1 = cbind(as.character(rownames(Peaks1)), as.character(space(Peaks1)),start(Peaks1), end(Peaks1),Peaks1$strand)
+		colnames(z1) = c(NameOfPeaks1, "chr", paste(NameOfPeaks1, "start", sep="_"), paste(NameOfPeaks1,"end", sep="_"), "strand1")
+		
 		z1[,2] = sub(' +', '',z1[,2])
 		
 	   r1 = do.call(rbind, lapply(seq_len(numberOfChromosome), function(i) 	{
@@ -102,15 +106,26 @@ function(Peaks1,Peaks2,maxgap=100,multiple=c(TRUE, FALSE), NameOfPeaks1="TF1", N
 			{
 				"inside"
 			}
-			else
+			else if (as.character(r$strand[i]) == "1" |  as.character(r$strand[i]) =="+")
 			{
 				"overlapEnd"
+			}
+			else
+			{
+				"overlapStart"
 			}
 		}
 		else if (as.numeric(as.character(r[[paste(NameOfPeaks1, "end", sep="_")]][i])) >= as.numeric(as.character(r[[paste(NameOfPeaks2, "start", sep="_")]][i])) &
 			as.numeric(as.character(r[[paste(NameOfPeaks1, "end", sep="_")]][i])) <= as.numeric(as.character(r[[paste(NameOfPeaks2, "end", sep="_")]][i])))
 		{
+			if (as.character(r$strand[i]) == "1" |  as.character(r$strand[i]) =="+")
+			{
 				"overlapStart"
+			}
+			else
+			{
+				"overlapEnd"
+			}
 		}
 		else if (as.numeric(as.character(r[[paste(NameOfPeaks1, "end", sep="_")]][i])) >= as.numeric(as.character(r[[paste(NameOfPeaks2, "end", sep="_")]][i])) &
 			as.numeric(as.character(r[[paste(NameOfPeaks1, "start", sep="_")]][i])) <= as.numeric(as.character(r[[paste(NameOfPeaks2, "start", sep="_")]][i])))
@@ -119,11 +134,25 @@ function(Peaks1,Peaks2,maxgap=100,multiple=c(TRUE, FALSE), NameOfPeaks1="TF1", N
 		}
 		else if (as.numeric(as.character(r[[paste(NameOfPeaks1, "end", sep="_")]][i])) < as.numeric(as.character(r[[paste(NameOfPeaks2, "start", sep="_")]][i])))
 		{
+			if (as.character(r$strand[i]) == "1" |  as.character(r$strand[i]) =="+")
+			{
 				"upstream"
+			}
+			else
+			{
+				"downstream"
+			}
 		}
 		else if (as.numeric(as.character(r[[paste(NameOfPeaks1, "start", sep="_")]][i])) > as.numeric(as.character(r[[paste(NameOfPeaks2, "end", sep="_")]][i])))
 		{
+			if (as.character(r$strand[i]) == "1" |  as.character(r$strand[i]) =="+")
+			{
 				"downstream"
+			}
+			else
+			{
+				"upstream"
+			}
 		}
 		}))
 		
@@ -135,6 +164,14 @@ function(Peaks1,Peaks2,maxgap=100,multiple=c(TRUE, FALSE), NameOfPeaks1="TF1", N
 			names = paste(NameOfPeaks1,as.character(r[[NameOfPeaks1]]), NameOfPeaks2, as.character(r[[NameOfPeaks2]]), sep="-")), 
 			space=as.character(r$chr))	
 		#MergedPeaks <- MergedPeaks[order(rownames(MergedPeaks)),]
-		list(OverlappingPeaks = r[order(r[[NameOfPeaks1]]),], MergedPeaks = MergedPeaks)
+		Peaks1withOverlaps = RangedData(IRanges(start=as.numeric(as.character(r[[paste(NameOfPeaks1,"start",sep="_")]])), 
+							end= as.numeric(as.character(r[[paste(NameOfPeaks1,"end",sep="_")]])),
+							names = as.character(r[[NameOfPeaks1]])),
+							space = as.character(r$chr), strand=as.character(r$strand1))
+		Peaks2withOverlaps = RangedData(IRanges(start=as.numeric(as.character(r[[paste(NameOfPeaks2,"start",sep="_")]])), 
+							end= as.numeric(as.character(r[[paste(NameOfPeaks2,"end",sep="_")]])),
+							names = as.character(r[[NameOfPeaks2]])),
+							space = as.character(r$chr), strand=as.character(r$strand))
+		list(OverlappingPeaks = r[order(r[[NameOfPeaks1]]),], MergedPeaks = MergedPeaks,Peaks1withOverlaps=Peaks1withOverlaps, Peaks2withOverlaps=Peaks2withOverlaps)
 	}
 
