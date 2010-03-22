@@ -16,5 +16,6 @@ GFF2RangedData <- function(data.GFF,header=FALSE)
 	strand[strand== "+"] = 1
 	strand[strand=="-"] = -1
 	names = formatC(1:dim(myPeak)[1], width=nchar(dim(myPeak)[1]), flag='0')
+	
 	RangedData(IRanges(start=as.numeric(as.character(myPeak[,4])), end=as.numeric(as.character(myPeak[,5])), names = names), space = sub("chr", "", as.character(myPeak[,1])), strand = strand, score=as.numeric(as.character(myPeak[,6])))
 }

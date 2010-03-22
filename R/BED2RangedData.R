@@ -17,7 +17,7 @@ BED2RangedData <- function(data.BED,header=FALSE)
 		names = as.character(myPeak[,4])
 		if (length(unique(names))==1)
 		{
-			 names = formatC(1:dim(myPeak)[1], width=nchar(dim(myPeak)[1]), flag='0')
+			  names = formatC(1:dim(myPeak)[1], width=nchar(dim(myPeak)[1]), flag='0')
 		}
 	}
 	else
