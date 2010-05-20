@@ -40,7 +40,16 @@ function(myPeakList, mart,featureType=c("TSS","miRNA", "Exon"), AnnotationData,o
 		{
 			rownames(TSS.ordered) = formatC(1:dim(TSS.ordered)[1], width=nchar(dim(TSS.ordered)[1]), flag='0')
 		}
-		r2 = cbind(rownames(TSS.ordered), start(TSS.ordered), end(TSS.ordered), TSS.ordered$strand)
+		if (length(TSS.ordered$strand) == length(start(TSS.ordered))) 
+{ 
+	r2 = cbind(rownames(TSS.ordered), start(TSS.ordered), end(TSS.ordered), as.character(TSS.ordered$strand))
+}
+else
+{
+	TSS.ordered$strand = rep("+",length(start(TSS.ordered)))
+	r2 = cbind(rownames(TSS.ordered), start(TSS.ordered), end(TSS.ordered), rep("+",length(start(TSS.ordered))))
+}
+
 		colnames(r2) = c("feature_id", "start_position", "end_position", "strand")
 		allChr.Anno = unique(space(TSS.ordered))
 		
@@ -120,10 +129,10 @@ function(myPeakList, mart,featureType=c("TSS","miRNA", "Exon"), AnnotationData,o
 		length =  as.numeric(as.character(r11$end_position)) -  as.numeric(as.character(r11$start_position))
 		#insideFeature = (distancetoFeature>=0 & distancetoFeature <= length)
 		insideFeature = do.call(c, lapply(seq(from=1,to=dim(r11)[1],by=1), function(i) 	{
-		if (as.numeric(as.character(r11$peakStart[i]))>= as.numeric(as.character(r11$start_position[i])) &
+		if (as.numeric(as.character(r11$peakStart[i]))>= as.numeric(as.character(r11$start_position[i])) &&
 			as.numeric(as.character(r11$peakStart[i]))<= as.numeric(as.character(r11$end_position[i])))
 		{
-			if (as.numeric(as.character(r11$peakEnd[i])) >= as.numeric(as.character(r11$start_position[i])) &
+			if (as.numeric(as.character(r11$peakEnd[i])) >= as.numeric(as.character(r11$start_position[i])) &&
 			as.numeric(as.character(r11$peakEnd[i])) <= as.numeric(as.character(r11$end_position[i])))
 			{
 				"inside"
@@ -133,12 +142,12 @@ function(myPeakList, mart,featureType=c("TSS","miRNA", "Exon"), AnnotationData,o
 				"overlapEnd"
 			}
 		}
-		else if (as.numeric(as.character(r11$peakEnd[i])) >= as.numeric(as.character(r11$start_position[i])) &
+		else if (as.numeric(as.character(r11$peakEnd[i])) >= as.numeric(as.character(r11$start_position[i])) &&
 			as.numeric(as.character(r11$peakEnd[i])) <= as.numeric(as.character(r11$end_position[i])))
 		{
 				"overlapStart"
 		}
-		else if (as.numeric(as.character(r11$peakEnd[i])) >= as.numeric(as.character(r11$end_position[i])) &
+		else if (as.numeric(as.character(r11$peakEnd[i])) >= as.numeric(as.character(r11$end_position[i])) &&
 			as.numeric(as.character(r11$peakStart[i])) <= as.numeric(as.character(r11$start_position[i])))
 		{
 				 "includeFeature"
@@ -162,10 +171,10 @@ function(myPeakList, mart,featureType=c("TSS","miRNA", "Exon"), AnnotationData,o
 		length =  as.numeric(as.character(r22$end_position)) -  as.numeric(as.character(r22$start_position))
 		#insideFeature = (distancetoFeature>=0 & distancetoFeature <= length)	
 		insideFeature = do.call(c, lapply(seq(from=1,to=dim(r22)[1],by=1), function(i) 	{		
-			if (as.numeric(as.character(r22$peakStart[i]))>= as.numeric(as.character(r22$start_position[i])) &
+			if (as.numeric(as.character(r22$peakStart[i]))>= as.numeric(as.character(r22$start_position[i])) &&
 			as.numeric(as.character(r22$peakStart[i]))<= as.numeric(as.character(r22$end_position[i])))
 			{
-			if (as.numeric(as.character(r22$peakEnd[i])) >= as.numeric(as.character(r22$start_position[i])) &
+			if (as.numeric(as.character(r22$peakEnd[i])) >= as.numeric(as.character(r22$start_position[i])) &&
 			as.numeric(as.character(r22$peakEnd[i])) <= as.numeric(as.character(r22$end_position[i])))
 			{
 				"inside"
@@ -175,12 +184,12 @@ function(myPeakList, mart,featureType=c("TSS","miRNA", "Exon"), AnnotationData,o
 				"overlapStart"
 			}
 			}
-		else if (as.numeric(as.character(r22$peakEnd[i])) >= as.numeric(as.character(r22$start_position[i])) &
+		else if (as.numeric(as.character(r22$peakEnd[i])) >= as.numeric(as.character(r22$start_position[i])) &&
 			as.numeric(as.character(r22$peakEnd[i])) <= as.numeric(as.character(r22$end_position[i])))
 		{
 				"overlapEnd"
 		}
-		else if (as.numeric(as.character(r22$peakEnd[i])) >= as.numeric(as.character(r22$end_position[i])) &
+		else if (as.numeric(as.character(r22$peakEnd[i])) >= as.numeric(as.character(r22$end_position[i])) &&
 			as.numeric(as.character(r22$peakStart[i])) <= as.numeric(as.character(r22$start_position[i])))
 		{
 				 "includeFeature"
