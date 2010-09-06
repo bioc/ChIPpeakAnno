@@ -25,32 +25,21 @@ findOverlappingPeaks<-function (Peaks1, Peaks2, maxgap = 100, multiple = c(TRUE,
     {
     		Peaks2$strand = rep("+", length(start(Peaks2)))
     	}
-    	if(length(Peaks1$strand) ==0)
+ else
+    {
+        Peaks2$strand[as.character(Peaks2$strand) == "1"] = "+";
+        Peaks2$strand[as.character(Peaks2$strand) == "-1"] = "-";
+   }
+
+    if(length(Peaks1$strand) ==0)
     {
     		Peaks1$strand = rep("+", length(start(Peaks1)))
     	}
-    	strand = do.call(c, lapply(1:length(start(Peaks1)), 
-                function(i) {
-                  if (as.character(Peaks1$strand[i]) == "1" || as.character(Peaks1$strand[i]) == 
-                    "+") {
-                    "+"
-                  }
-                  else {
-                   "-"
-                  }
-                }))
-            Peaks1$strand = strand
-	strand = do.call(c, lapply(1:length(start(Peaks2)), 
-                function(i) {
-                  if (as.character(Peaks2$strand[i]) == "1" || as.character(Peaks2$strand[i]) == 
-                    "+") {
-                    "+"
-                  }
-                  else {
-                   "-"
-                  }
-                }))
-            Peaks2$strand = strand
+	 else
+    {
+        Peaks1$strand[as.character(Peaks1$strand) == "1"] = "+";
+        Peaks1$strand[as.character(Peaks1$strand) == "-1"] = "-";       
+    }
 
     r2 = cbind(rownames(Peaks2), start(Peaks2), end(Peaks2), 
         Peaks2$strand)
