@@ -198,14 +198,18 @@ annotatePeakInBatch <-
                         as.numeric(as.character(r11$FeatureLoc))
                     length = as.numeric(as.character(r11$end_position)) -
                         as.numeric(as.character(r11$start_position))
-                    temp <- Map(as.numeric, Map(as.character, r11[c("peakStart", "peakEnd", "start_position", "end_position")]))
+                    temp <- Map(as.numeric, Map(as.character, r11[c("peakStart", "peakEnd", "start_position", "end_position", "strand")]))
                     insideFeature <- with(temp, {
                         insideFeature = as.character(NA)
                         insideFeature[peakEnd < start_position] <- "upstream"
                         insideFeature[peakStart > end_position] <- "downstream"
+                        insideFeature[peakEnd < start_position & strand %in% c("-", "-1")] <- "downstream"
+                        insideFeature[peakStart > end_position & strand %in% c("-", "-1")] <- "upstream"
                         insideFeature[peakStart <= start_position & peakEnd >= end_position] <- "includeFeature"
                         insideFeature[peakStart < start_position & peakEnd >= start_position & peakEnd < end_position] <- "overlapStart"
                         insideFeature[peakStart > start_position & peakStart <= end_position & peakEnd > end_position] <- "overlapEnd"
+                        insideFeature[peakStart < start_position & peakEnd >= start_position & peakEnd < end_position & strand %in% c("-", "-1")] <- "overlapEnd"
+                        insideFeature[peakStart > start_position & peakStart <= end_position & peakEnd > end_position & strand %in% c("-", "-1")] <- "overlapStart"
                         insideFeature[peakStart >= start_position & peakEnd <= end_position] <- "inside"
                         stopifnot(all(!is.na(insideFeature)))
                         insideFeature
@@ -219,14 +223,18 @@ annotatePeakInBatch <-
                         as.numeric(as.character(r22$PeakLoc))
                     length = as.numeric(as.character(r22$end_position)) -
                         as.numeric(as.character(r22$start_position))
-                    temp <- Map(as.numeric, Map(as.character, r22[c("peakStart", "peakEnd", "start_position", "end_position")]))
+                    temp <- Map(as.numeric, Map(as.character, r22[c("peakStart", "peakEnd", "start_position", "end_position", "strand")]))
                     insideFeature <- with(temp, {
                         insideFeature = as.character(NA)
                         insideFeature[peakEnd < start_position] <- "upstream"
                         insideFeature[peakStart > end_position] <- "downstream"
+                        insideFeature[peakEnd < start_position & strand %in% c("-", "-1")] <- "downstream"
+                        insideFeature[peakStart > end_position & strand %in% c("-", "-1")] <- "upstream"        
                         insideFeature[peakStart <= start_position & peakEnd >= end_position] <- "includeFeature"
                         insideFeature[peakStart < start_position & peakEnd >= start_position & peakEnd < end_position] <- "overlapStart"
                         insideFeature[peakStart > start_position & peakStart <= end_position & peakEnd > end_position] <- "overlapEnd"
+                        insideFeature[peakStart < start_position & peakEnd >= start_position & peakEnd < end_position & strand %in% c("-", "-1")] <- "overlapEnd"
+                        insideFeature[peakStart > start_position & peakStart <= end_position & peakEnd > end_position & strand %in% c("-", "-1")] <- "overlapStart"                        
                         insideFeature[peakStart >= start_position & peakEnd <= end_position] <- "inside"
                         stopifnot(all(!is.na(insideFeature)))
                         insideFeature
