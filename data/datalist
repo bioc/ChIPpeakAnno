@@ -1,0 +1,15 @@
+ExonPlusUtr.human.GRCh37
+Peaks.Ste12.Replicate1
+Peaks.Ste12.Replicate2
+Peaks.Ste12.Replicate3
+TSS.human.GRCh37
+TSS.human.NCBI36
+TSS.mouse.GRCm38
+TSS.mouse.NCBIM37
+TSS.rat.RGSC3.4
+TSS.rat.Rnor_5.0
+TSS.zebrafish.Zv8
+TSS.zebrafish.Zv9
+annotatedPeak
+enrichedGO
+myPeakList
