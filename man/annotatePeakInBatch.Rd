@@ -119,19 +119,25 @@ Humana Press. http://dx.doi.org/10.1007/978-1-62703-607-8_8
 \author{ Lihua Julie Zhu, Jianhong Ou}
 \seealso{ \link{getAnnotation}, \link{findOverlappingPeaks}, 
 \link{makeVennDiagram}, \link{addGeneIDs}, \link{peaksNearBDP}, 
-\link{summarizePatternInPeaks}}
+\link{summarizePatternInPeaks}, \link{annoGR}}
 \examples{
 
 #if (interactive()){
-    ## example 1: annotate myPeakList (GRanges) 
-    ## with TSS.human.NCBI36 (Granges)
+    ## example 1: annotate myPeakList by TxDb or EnsDb.
     data(myPeakList)
+    library(EnsDb.Hsapiens.v75)
+    annoData <- annoGR(EnsDb.Hsapiens.v75)
+    annotatePeak = annotatePeakInBatch(myPeakList[1:6], AnnotationData=annoData)
+    annotatePeak
+    
+    ## example 2: annotate myPeakList (GRanges) 
+    ## with TSS.human.NCBI36 (Granges)
     data(TSS.human.NCBI36)
-    annotatedPeak = annotatePeakInBatch(myPeakList[1:6,], 
+    annotatedPeak = annotatePeakInBatch(myPeakList[1:6], 
                                         AnnotationData=TSS.human.NCBI36)
     annotatedPeak
     
-    ## example 2: you have a list of transcription factor biding sites from 
+    ## example 3: you have a list of transcription factor biding sites from 
     ## literature and are interested in determining the extent of the overlap 
     ## to the list of peaks from your experiment. Prior calling the function 
     ## annotatePeakInBatch, need to represent both dataset as RangedData 
