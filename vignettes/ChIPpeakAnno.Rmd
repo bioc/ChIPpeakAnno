@@ -142,7 +142,7 @@ A pie chart is used to demonstrate the overlap features of the common peaks.
 pie1(table(ol$overlappingPeaks[["gr1///gr2"]]$overlapFeature))
 ```
 
-After finding the overlapping peaks, you can use `annotatePeakInBatch` i
+After finding the overlapping peaks, you can use `annotatePeakInBatch` 
 to annotate all the genomic features in the _AnnotationData_ within 5kb from 
 those peaks. 
 
