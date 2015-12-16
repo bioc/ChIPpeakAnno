@@ -1,3 +1,7 @@
+CHANGES IN VERSION 3.4.3
+-------------------------
+    o update the documentation to avoid time-out error.
+
 CHANGES IN VERSION 3.4.2
 -------------------------
     o update the peakPermTest algorithm to make more reasonable result.

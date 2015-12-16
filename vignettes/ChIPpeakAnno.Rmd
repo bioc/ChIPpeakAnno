@@ -717,28 +717,30 @@ Following are the sample codes to do the `permTest`:
 
 
 ```{r peakPermTest}
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-cds <- unique(unlist(cdsBy(txdb)))
-utr5 <- unique(unlist(fiveUTRsByTranscript(txdb)))
-utr3 <- unique(unlist(threeUTRsByTranscript(txdb)))
-set.seed(123)
-utr3 <- utr3[sample.int(length(utr3), 1000)]
-pt <- peakPermTest(utr3, 
+if(interactive()){
+    library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+    txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+    cds <- unique(unlist(cdsBy(txdb)))
+    utr5 <- unique(unlist(fiveUTRsByTranscript(txdb)))
+    utr3 <- unique(unlist(threeUTRsByTranscript(txdb)))
+    set.seed(123)
+    utr3 <- utr3[sample.int(length(utr3), 1000)]
+    pt <- peakPermTest(utr3, 
              utr5[sample.int(length(utr5), 1000)], 
              maxgap=500,
              TxDb=txdb, seed=1,
-             force.parallel=FALSE)
-plot(pt)
-## highly relevant peaks
-ol <- findOverlaps(cds, utr3, maxgap=1)
-pt1 <- peakPermTest(utr3,
+             force.parallel=FALSE) 
+    plot(pt)
+    ## highly relevant peaks
+    ol <- findOverlaps(cds, utr3, maxgap=1)
+    pt1 <- peakPermTest(utr3,
              c(cds[sample.int(length(cds), 500)], 
                 cds[queryHits(ol)][sample.int(length(ol), 500)]), 
              maxgap=500, 
              TxDb=txdb, seed=1,
              force.parallel=FALSE)
-plot(pt1)
+    plot(pt1)
+}
 ```
 
 Alternatively, users can create a pool of peaks representing all potential 
