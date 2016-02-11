@@ -7,6 +7,9 @@ getEnrichedGO <- function(annotatedPeak, orgAnn,
     {
         stop("Missing required argument annotatedPeak!")    
     }
+    if(length(multiAdjMethod)>0 && multiAdjMethod!=""){
+        multiAdjMethod <- match.arg(multiAdjMethod, c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD", "BH", "BY","ABH","TSBH"))
+    }
     if (missing(orgAnn))
     {
         message("No valid organism specific GO gene mapping package 

@@ -1,3 +1,7 @@
+CHANGES IN VERSION 3.4.6
+-------------------------
+    o add more parameter test for getEnrichedGO and getEnrichedPATH.
+    
 CHANGES IN VERSION 3.4.5
 -------------------------
     o fix the bug with timeout error of getBM in getAnnotation function.
