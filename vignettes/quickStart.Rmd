@@ -95,36 +95,38 @@ anno$symbol <- xget(anno$feature, org.Hs.egSYMBOL)
 anno[anno$peak=="peak12725"]
 ```
 The annotated peaks can be visualized with R/Bioconductor package **trackViewer** developed by our group.
+Following is the sample code to plot the tracks.
 ```{r trackViewer}
-library(trackViewer)
-gr <- peak <- peaks["peak12725"]
-start(gr) <- start(gr) - 5000
-end(gr) <- end(gr) + 5000
-if(.Platform$OS.type != "windows"){
-    peak12725 <- importScore(file=system.file("extdata", "Tead4.bigWig", 
-                                      package="ChIPpeakAnno"),
-                    ranges=peak, format = "BigWig")
-}else{## rtracklayer can not import bigWig files on Windows
-    load(file.path(dirname(path), "cvglist.rds"))
-    peak12725 <- Views(cvglists[["Tead4"]][[as.character(seqnames(peak))]],
-                       start(peak),
-                       end(peak))
-    peak12725 <- viewApply(peak12725, as.numeric)
-    tmp <- rep(peak, width(peak))
-    width(tmp) <- 1
-    tmp <- shift(tmp, shift=0:(width(peak)-1))
-    mcols(tmp) <- peak12725
-    colnames(mcols(tmp)) <- "score"
-    peak12725 <- new("track", dat=tmp, 
-                     name="peak12725", 
-                     type="data", 
-                     format="BED")
+if(require(trackViewer, quietly=TRUE)){
+    gr <- peak <- peaks["peak12725"]
+    start(gr) <- start(gr) - 5000
+    end(gr) <- end(gr) + 5000
+    if(.Platform$OS.type != "windows"){
+        peak12725 <- importScore(file=system.file("extdata", "Tead4.bigWig", 
+                                                  package="ChIPpeakAnno"),
+                                 ranges=peak, format = "BigWig")
+    }else{## rtracklayer can not import bigWig files on Windows
+        load(file.path(dirname(path), "cvglist.rds"))
+        peak12725 <- Views(cvglists[["Tead4"]][[as.character(seqnames(peak))]],
+                           start(peak),
+                           end(peak))
+        peak12725 <- viewApply(peak12725, as.numeric)
+        tmp <- rep(peak, width(peak))
+        width(tmp) <- 1
+        tmp <- shift(tmp, shift=0:(width(peak)-1))
+        mcols(tmp) <- peak12725
+        colnames(mcols(tmp)) <- "score"
+        peak12725 <- new("track", dat=tmp, 
+                         name="peak12725", 
+                         type="data", 
+                         format="BED")
+    }
+    
+    trs <- geneModelFromTxdb(TxDb.Hsapiens.UCSC.hg19.knownGene, 
+                             org.Hs.eg.db, gr)
+    names(trs) <- paste(sapply(trs, function(.ele) .ele@name), names(trs), sep=":")
+    optSty <- optimizeStyle(trackList(peak12725, trs, heightDist = c(.3, .7)),
+                            theme="bw")
+    viewTracks(optSty$tracks, gr=gr, viewerStyle=optSty$style)
 }
-
-trs <- geneModelFromTxdb(TxDb.Hsapiens.UCSC.hg19.knownGene, 
-                         org.Hs.eg.db, gr)
-names(trs) <- paste(sapply(trs, function(.ele) .ele@name), names(trs), sep=":")
-optSty <- optimizeStyle(trackList(peak12725, trs, heightDist = c(.3, .7)),
-                        theme="bw")
-viewTracks(optSty$tracks, gr=gr, viewerStyle=optSty$style)
 ```

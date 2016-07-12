@@ -1,3 +1,7 @@
+CHANGES IN VERSION 3.6.5
+-------------------------
+    o Update the documentation for featureAlignedSignal.
+    
 CHANGES IN VERSION 3.6.3
 -------------------------
     o Improve the efficiency of findOverlapsOfPeaks.
