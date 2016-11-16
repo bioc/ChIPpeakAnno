@@ -1,3 +1,7 @@
+CHANGES IN VERSION 3.8.2
+-------------------------
+    o trim seqnames when using toGRanges
+    
 CHANGES IN VERSION 3.8.1
 -------------------------
     o fix the bug for pair end reads for featureAlignedExtendSignal.
