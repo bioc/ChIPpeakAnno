@@ -49,4 +49,26 @@ test_that("findOverlapsOfPeaks works not correct", {
     d <- apply(d, 1, sort)
     expect_equal(paste(d[1,], d[2,]), 
                 paste(LETTERS[1:16], LETTERS[1:24][-(1:8*3-1)]))
+    ## check the output
+    peaks1 <- GRanges(seqnames=c(6,6,6,6,5),
+                      IRanges(start=c(15432,15572,1563000,1569800,167889600),
+                              end=c(15551,15605,1565199,1573799,167893599),
+                              names=c("p1","p2","p3","p4","p5")),
+                      strand="+", a=1, b=2, c="x", d=Rle(1, 5))
+    peaks2 <- GRanges(seqnames=c(6,6,6,6,5),
+                      IRanges(start=c(1549800,1554400,1565000,1569400,167888600),
+                              end=c(1550599,1560799,1565399,1571199,167888999),
+                              names=c("f1","f2","f3","f4","f5")),
+                      strand="+", a=1, b="w", c="x", d=1:5)
+    
+    peaks3 <- GRanges(seqnames=c(6,6,6,6,5),
+                      IRanges(start=c(154,155,1565000,1569400,167888600),
+                              end=c(155,156,1565399,1571199,167888999),
+                              names=c("f1","f2","f3","f4","f5")),
+                      strand="+", a=1, b=2, c=Rle(1:5))
+    
+    peaks4 <- peaks3
+    t1 <- findOverlapsOfPeaks(peaks1, peaks2, peaks3,peaks4, maxgap=1000)
+    expect_equal(length(t1$peaksInMergedPeaks)+length(t1$uniquePeaks), 20)
+    expect_equal(colnames(mcols(t1$uniquePeaks)), "a")
 })
