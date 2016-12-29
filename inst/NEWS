@@ -1,3 +1,7 @@
+CHANGES IN VERSION 3.8.7
+-------------------------
+    o fix the bug of annotatePeakInBatch when the peak metadata have exactly same colnames.
+
 CHANGES IN VERSION 3.8.6
 -------------------------
     o fix the bug of findOverlapsOfPeaks when the peaks are exactly same
