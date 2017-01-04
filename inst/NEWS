@@ -1,3 +1,8 @@
+CHANGES IN VERSION 3.8.8
+-------------------------
+    o fix the bug of featureAlignedSignal when there are seqnames in featues but
+    not in cvglists.
+    
 CHANGES IN VERSION 3.8.7
 -------------------------
     o fix the bug of annotatePeakInBatch when the peak metadata have exactly same colnames.
