@@ -26,6 +26,14 @@ featureAlignedSignal <- function(cvglists, feature.gr,
         start(feature.gr) <- start(feature.gr) - upstream
         grWidr <- unique(width(feature.gr))
     }
+    if(any(start(feature.gr)<1)){
+      warning("Some start position of the peaks are less than 1!",
+              "They will be filtered.")
+      feature.gr <- feature.gr[start(feature.gr)>0]
+    }
+    if(length(feature.gr)<2){
+      stop("Length of feature.gr less than 2.")
+    }
     if(inherits(cvglists, c("SimpleRleList", "RleList", "CompressedRleList"))){
         cvglistsName <- substitute(deparse(cvglists))
         cvglists <- list(cvglists)
@@ -37,6 +45,22 @@ featureAlignedSignal <- function(cvglists, feature.gr,
     cls <- sapply(cvglists, class)
     if(any(!cls %in% c("SimpleRleList", "RleList", "CompressedRleList")))
         stop("cvglists must be a list of SimpleRleList or RleList")
+    seqLen <-  lapply(cvglists, function(.ele) 
+      sapply(.ele, function(.e) sum(runLength(.e))))
+    seqLen.keep <- table(unlist(sapply(seqLen, names)))==3
+    seqLen <- seqLen[[1]][seqLen.keep]
+    seqLen <- seqLen[!is.na(seqLen)]
+    if(length(seqLen)>0){
+      feature.gr.subset <- 
+        feature.gr[seqnames(feature.gr) %in% names(seqLen)]
+      if(any(end(feature.gr.subset)>seqLen[as.character(seqnames(feature.gr.subset))])){
+        warning("Some end position of the peaks are out of bound!",
+                "They will be filtered.")
+        feature.gr <- 
+          feature.gr.subset[end(feature.gr.subset) <=
+                              seqLen[as.character(seqnames(feature.gr.subset))]]
+      }
+    }
     #feature.gr.bck <- feature.gr
     feature.gr$oid <- 1:length(feature.gr)
     feature.gr <- split(feature.gr, as.character(seqnames(feature.gr)))
