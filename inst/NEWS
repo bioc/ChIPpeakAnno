@@ -1,3 +1,9 @@
+CHANGES IN VERSION 3.12.5
+-------------------------
+
+    o Fix the warnings in windows
+    o Fix the bugs in help file of assignChromosomeRegion.
+    
 CHANGES IN VERSION 3.12.4
 -------------------------
 
