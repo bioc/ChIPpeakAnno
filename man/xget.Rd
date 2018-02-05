@@ -23,7 +23,7 @@ xget(x, envir, mode, ifnotfound=NA, inherits,
     Jianhong Ou
 }
 \seealso{
- See Also as \code{\link[base]{mget}}, \code{\link[AnnotationDbi:Bimap-envirAPI]{mget}}
+ See Also as \code{\link[base:get]{mget}}, \code{\link[AnnotationDbi:Bimap-envirAPI]{mget}}
 }
 \examples{
     library(org.Hs.eg.db)
