@@ -92,33 +92,37 @@ annotatePeakInBatch <-
         rm(nAnno)
         
         if(length(bindingRegion)>1){
-            message("Annotate peaks by annoPeaks, see ?annoPeaks for details.")
-            ## FeatureLocForDistance=c("TSS","middle","start","end", "geneEnd")
-            ##"startSite", "endSite", "fullRange"
-            if(!exists("bindingType")){
-                if(output %in% 
-                   c("overlapping", 
-                     "nearestBiDirectionalPromoters")){
-                    bindingType <- switch(
-                        output,
-                        nearestBiDirectionalPromoters="nearestBiDirectionalPromoters",
-                        overlapping=switch(FeatureLocForDistance,
-                                           TSS="startSite",
-                                           geneEnd="endSite",
-                                           NA),
-                        NA
-                    )
-                }
+          message("Annotate peaks by annoPeaks, see ?annoPeaks for details.")
+          ## FeatureLocForDistance=c("TSS","middle","start","end", "geneEnd")
+          ##"startSite", "endSite", "fullRange"
+          dots <- list(...)
+          if(!"bindingType" %in% names(dots)){
+            if(output %in% 
+               c("overlapping", 
+                 "nearestBiDirectionalPromoters")){
+              bindingType <- switch(
+                output,
+                nearestBiDirectionalPromoters="nearestBiDirectionalPromoters",
+                overlapping=switch(FeatureLocForDistance,
+                                   TSS="startSite",
+                                   geneEnd="endSite",
+                                   NA),
+                NA
+              )
             }
-            if(exists("bindingType") && !is.na(bindingType)){
-                message("maxgap will be ignored.")
-                return(annoPeaks(peaks=myPeakList, annoData=TSS.ordered, 
-                                 bindingType=bindingType,
-                                 bindingRegion=bindingRegion,
-                                 ...))
-            }else{
-                message("bindingRegion will be ignored.")
-            }
+          }else{
+            bindingType <- dots$bindingType
+          }
+          if(exists("bindingType") && !is.na(bindingType)){
+            message("maxgap will be ignored.")
+            dots$peak <- myPeakList
+            dots$annoData <- TSS.ordered
+            dots$bindingType <- bindingType
+            dots$bindingRegion <- bindingRegion
+            return(do.call(annoPeaks, dots))
+          }else{
+            message("bindingRegion will be ignored.")
+          }
         }
         
         if (is.null(names(TSS.ordered))){
