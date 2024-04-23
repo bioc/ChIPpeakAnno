@@ -3,7 +3,6 @@
 \docType{package}
 \name{ChIPpeakAnno-package}
 \alias{ChIPpeakAnno-package}
-\alias{_PACKAGE}
 \alias{ChIPpeakAnno}
 \title{Batch annotation of the peaks identified from either ChIP-seq or ChIP-chip
 experiments.}

@@ -75,7 +75,7 @@ oligoFrequency <- function(sequence, MarkovOrder=3L){
 #' @keywords misc
 #' @export
 #' @importFrom Biostrings DNAStringSet PDict vcountPDict DNAString 
-#' pairwiseAlignment aligned
+#' @importFrom pwalign pairwiseAlignment aligned
 #' @importFrom utils adist combn
 #' @importFrom stats hclust kmeans as.dendrogram nobs
 #' @examples
