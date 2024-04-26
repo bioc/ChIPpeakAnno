@@ -59,41 +59,41 @@ all chromosomes randomly. Default is 'asPeak'.}
 \item{alpha}{Numeric value. The significant level for permutation test, 
 default is 0.05.}
 
-\item{...}{Aditional parameter passed to function \\link[universalmotif]
-{shuffle_sequences}}
+\item{...}{Aditional parameter passed to function
+\link[universalmotif]{shuffle_sequences}}
 }
 \value{
 A list including two data frames named 'motif_enrichment' and 
 'motif_occurrence'. The 'motif_enrichment' has four columns: 
 \itemize{
- \item{"patternNum"}: {number of matched pattern}
- \item{"totalNumPatternWithSameLen"}:  {total number of pattern with the 
+ \item{"patternNum": number of matched pattern}
+ \item{"totalNumPatternWithSameLen":  total number of pattern with the 
  same length}
- \item{"expectedRate"}:  {expected rate of pattern for 'binom.test' method}
- \item{"patternRate"}:  {real rate of pattern for 'permutation.test' method}
- \item{"pValueBinomTest"}:  {p value of bimom test for 'binom.test' method}
- \item{"cutOffPermutationTest"}:  {cut off of permutation test for 
+ \item{"expectedRate":  expected rate of pattern for 'binom.test' method}
+ \item{"patternRate":  real rate of pattern for 'permutation.test' method}
+ \item{"pValueBinomTest":  p value of bimom test for 'binom.test' method}
+ \item{"cutOffPermutationTest":  cut off of permutation test for 
  'permutation.test' method}
 }
 
 The 'motif_occurrence' has 14 columns:
 
 \itemize{
- \item{"motifChr"}: {Chromosome of motif}
- \item{"motifStartInChr"}:  {motif start position in chromosome}
- \item{"motifEndInChr"}:  {motif end position in chromosome}
- \item{"motifName"}:  {motif name}
- \item{"motifPattern"}:  {motif pattern}
- \item{"motifStartInPeak"}:  {motif start position in peak}
- \item{"motifEndInPeak"}: {motif end position in peak}
- \item{"motifFound"}:  {specific motif Found in peak}
- \item{"motifFoundStrand"}:  {strand of specific motif Found in peak, "-" 
+ \item{"motifChr":    Chromosome of motif}
+ \item{"motifStartInChr":    motif start position in chromosome}
+ \item{"motifEndInChr":    motif end position in chromosome}
+ \item{"motifName":    motif name}
+ \item{"motifPattern":    motif pattern}
+ \item{"motifStartInPeak":    motif start position in peak}
+ \item{"motifEndInPeak":    motif end position in peak}
+ \item{"motifFound":    specific motif Found in peak}
+ \item{"motifFoundStrand":    strand of specific motif Found in peak, "-" 
  means reverse complement of motif found in peaks}
- \item{"peakChr"}:  {Chromosome of peak}
- \item{"peakStart"}:  {peak start position}
- \item{"peakEnd"}:  {peak end position}
- \item{"peakWidth"}:  {peak width}
- \item{"peakStrand"}:  {peak strand}
+ \item{"peakChr":    Chromosome of peak}
+ \item{"peakStart":    peak start position}
+ \item{"peakEnd":    peak end position}
+ \item{"peakWidth":    peak width}
+ \item{"peakStrand":    peak strand}
 }
 }
 \description{

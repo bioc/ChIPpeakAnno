@@ -4,7 +4,7 @@ Title:
         Batch annotation of the peaks identified from either ChIP-seq,
         ChIP-chip experiments, or any experiments that result in large
         number of genomic interval data
-Version: 3.37.4
+Version: 3.37.5
 Encoding: UTF-8
 Author: 
         Lihua Julie Zhu,
@@ -30,7 +30,7 @@ Depends:
         GenomicRanges (>= 1.31.8), S4Vectors (>= 0.17.25)
 Imports: 
         AnnotationDbi, BiocGenerics (>= 0.1.0), Biostrings (>=
-        2.47.6), DBI, dplyr, GenomeInfoDb,
+        2.47.6), pwalign, DBI, dplyr, GenomeInfoDb,
         GenomicAlignments, GenomicFeatures, RBGL, Rsamtools,
         SummarizedExperiment, VennDiagram, biomaRt, ggplot2, grDevices,
         graph, graphics, grid, InteractionSet, KEGGREST, matrixStats,
@@ -67,4 +67,4 @@ LazyData: true
 LazyDataCompression: xz
 biocViews: Annotation, ChIPSeq, ChIPchip
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1

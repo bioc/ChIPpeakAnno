@@ -75,7 +75,7 @@ oligoFrequency <- function(sequence, MarkovOrder=3L){
 #' @keywords misc
 #' @export
 #' @importFrom Biostrings DNAStringSet PDict vcountPDict DNAString 
-#' pairwiseAlignment aligned
+#' @importFrom pwalign pairwiseAlignment aligned
 #' @importFrom utils adist combn
 #' @importFrom stats hclust kmeans as.dendrogram nobs
 #' @examples
@@ -249,8 +249,9 @@ oligoSummary <- function(sequence, oligoLength=6L,
                       sss, ss, SIMPLIFY = FALSE)
         consensusStr <- DNAString(names(ss)[1])
         for(i in 2:length(ss)){
+            tempStr <- DNAString(names(ss)[i])
             consensusStr <- aligned(
-                    pairwiseAlignment(consensusStr, DNAString(names(ss)[i]), 
+                    pairwiseAlignment(consensusStr, tempStr, 
                                       type="local"),
                     degap=TRUE)
         }
