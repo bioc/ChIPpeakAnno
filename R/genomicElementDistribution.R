@@ -203,7 +203,7 @@ genomicElementDistribution <-
         "promoterLevel" = {
           suppressMessages(g <- transcripts(TxDb))
           pro <- mapply(FUN=function(upstream, downstream){
-            promoters(g, upstream = upstream, downstream = downstream)
+            unique(promoters(g, upstream = upstream, downstream = downstream))
           }, promoterLevel$upstream, 
           promoterLevel$downstream,
           SIMPLIFY = FALSE)
@@ -221,9 +221,9 @@ genomicElementDistribution <-
         },
         "geneLevel" = {
           suppressMessages(g <- transcripts(TxDb))
-          pro <- promoters(g, 
+          pro <- unique(promoters(g, 
                            upstream = promoterRegion["upstream"],
-                           downstream = promoterRegion["downstream"])
+                           downstream = promoterRegion["downstream"]))
           dws <- downstreams(g,
                              upstream = geneDownstream["upstream"],
                              downstream = geneDownstream["downstream"])
