@@ -124,7 +124,7 @@ assignChromosomeRegion <-
     {
         ##check inputs
         if(!is.null(TxDb)){
-            if(!inherits(TxDb, "TxDb") & !inherits(TxDb, "EnsDb")) 
+            if(!inherits(TxDb, c("TxDb", "EnsDb"))) 
                 stop("TxDb must be an object of TxDb or similar such as EnsDb, 
                      try\n?TxDb\tto see more info.")
             if(!inherits(peaks.RD, c("GRanges"))) 
