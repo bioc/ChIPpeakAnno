@@ -67,7 +67,7 @@ addMetadata <- function(ol, colNames=NULL, FUN=c, ...){
                                 addMetatdata_group=
                                     rep(seq_along(.ele), 
                                         lengths(.ele$peakNames))), 
-                            FUN=mean, ...)
+                            FUN=FUN, ...)
         .mcols <- .mcols[order(.mcols$addMetatdata_group), ]
         .n <- ncol(mcols(.ele))
         mcols(.ele) <- cbind(mcols(.ele), .mcols[, colNames])

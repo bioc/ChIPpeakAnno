@@ -1,3 +1,8 @@
+CHANGES IN VERSION 3.38.1
+-------------------------
+
+    o fix a bug that FUN parameter is not passed to the function of addMetadata.
+    
 CHANGES IN VERSION 3.37.4
 -------------------------
 
