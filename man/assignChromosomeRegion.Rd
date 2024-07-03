@@ -71,7 +71,8 @@ be incremented for the same example.  The values could be any conbinations
 of "Promoters", "immediateDownstream", "fiveUTRs", "threeUTRs", "Exons" and
 "Introns", Default=NULL}
 
-\item{TxDb}{an object of \code{\link[GenomicFeatures:TxDb-class]{TxDb}}}
+\item{TxDb}{an object of \code{\link[GenomicFeatures:TxDb-class]{TxDb}} or
+similar including \code{\link[GenomicFeatures:EnsDb-class]{EnsDb}}}
 }
 \value{
 A list of two named vectors: percentage and jaccard (Jaccard Index).
