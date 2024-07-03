@@ -52,7 +52,8 @@
 #' be incremented for the same example.  The values could be any conbinations
 #' of "Promoters", "immediateDownstream", "fiveUTRs", "threeUTRs", "Exons" and
 #' "Introns", Default=NULL
-#' @param TxDb an object of \code{\link[GenomicFeatures:TxDb-class]{TxDb}}
+#' @param TxDb an object of \code{\link[GenomicFeatures:TxDb-class]{TxDb}} or
+#' similar including \code{\link[GenomicFeatures:EnsDb-class]{EnsDb}}
 #' @return A list of two named vectors: percentage and jaccard (Jaccard Index).
 #' The information in the vectors: \item{list("Exons")}{Percent or the picard
 #' index of the peaks resided in exon regions.} \item{list("Introns")}{Percent
@@ -123,8 +124,8 @@ assignChromosomeRegion <-
     {
         ##check inputs
         if(!is.null(TxDb)){
-            if(!inherits(TxDb, "TxDb")) 
-                stop("TxDb must be an object of TxDb, 
+            if(!inherits(TxDb, c("TxDb", "EnsDb"))) 
+                stop("TxDb must be an object of TxDb or similar such as EnsDb, 
                      try\n?TxDb\tto see more info.")
             if(!inherits(peaks.RD, c("GRanges"))) 
                 stop("peaks.RD must be a GRanges object.")
