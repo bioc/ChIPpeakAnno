@@ -53,7 +53,7 @@
 #' of "Promoters", "immediateDownstream", "fiveUTRs", "threeUTRs", "Exons" and
 #' "Introns", Default=NULL
 #' @param TxDb an object of \code{\link[GenomicFeatures:TxDb-class]{TxDb}} or
-#' similar including \code{\link[GenomicFeatures:EnsDb-class]{EnsDb}}
+#' similar including \code{\link[ensembldb:EnsDb-class]{EnsDb}}
 #' @return A list of two named vectors: percentage and jaccard (Jaccard Index).
 #' The information in the vectors: \item{list("Exons")}{Percent or the picard
 #' index of the peaks resided in exon regions.} \item{list("Introns")}{Percent
