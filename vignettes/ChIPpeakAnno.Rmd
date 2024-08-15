@@ -245,10 +245,10 @@ if (!library(Vennerable)) {
   library(Vennerable)
 }
 
-n <- which(colnames(ol$venn_cnt) == "Counts") - 1
-set_names <- colnames(ol$venn_cnt)[1:n]
-weight <- ol$venn_cnt[, "Counts"]
-names(weight) <- apply(ol$venn_cnt[, 1:n], 1, base::paste, collapse = "")
+n <- which(colnames(ol$vennCounts) == "Counts") - 1
+set_names <- colnames(ol$vennCounts)[1:n]
+weight <- ol$vennCounts[, "Counts"]
+names(weight) <- apply(ol$vennCounts[, 1:n], 1, base::paste, collapse = "")
 v <- Venn(SetNames = set_names, Weight = weight)
 plot(v)
 ```
